@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+   document.addEventListener('DOMContentLoaded', () => {
     const productsData = [
         { id: 1, name: "F1 Hoodie", price: 1200, images: ["f1.hoodie.jpg", "f1.hoodie.b.jpg"], description: "A stylish hoodie with a Ferrari design for all-day comfort.", hasSize: true, sizes: ["S", "L", "XL"], type: "hoodie" },
         { id: 2, name: "F1 T-Shirt", price: 500, images: ["f1.t-shirt.jpg", "f1.t-shirt.b.jpg"], description: "A light and trendy t-shirt, perfect for daily wear.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
@@ -64,6 +64,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatInput = document.getElementById('chat-input');
     const sendBtn = document.getElementById('send-btn');
     const chatBody = document.getElementById('chat-body');
+
+    // Get the header element
+    const header = document.getElementById('main-header');
+
+    // Variables for the scroll effect
+    let lastScrollY = window.scrollY;
+    let isHeaderHidden = false;
 
     // Functions
     const showPage = (id) => {
@@ -413,6 +420,11 @@ document.addEventListener('DOMContentLoaded', () => {
     nextBtn.addEventListener('click', () => changeImage(1));
 
 
+    searchInput.addEventListener('input', () => {
+        showPage('search');
+        renderSearchResults(searchInput.value);
+    });
+
     searchGoBtn.addEventListener('click', () => {
         const query = searchInput.value;
         showPage('search');
@@ -451,6 +463,27 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Enter') {
             sendBtn.click();
         }
+    });
+
+    // Handle scroll to hide/show header
+    window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+
+        // Hide header on scroll down after a certain point
+        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            header.classList.add('header-hidden');
+        } 
+        // Show header on scroll up
+        else if (currentScrollY < lastScrollY) {
+            header.classList.remove('header-hidden');
+        }
+
+        // Always show header at the very top of the page
+        if (currentScrollY === 0) {
+            header.classList.remove('header-hidden');
+        }
+
+        lastScrollY = currentScrollY;
     });
 
     // Initial page load
