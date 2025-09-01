@@ -48,8 +48,13 @@ header {
     top: 0; 
     z-index: 1000; 
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); 
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.4s ease-in-out;
 } 
+
+/* New class for hiding the header on scroll down */
+header.header-hidden {
+    transform: translateY(-100%);
+}
 
 .logo {
     display: flex;
@@ -74,7 +79,7 @@ nav .nav-btn {
     font-size: 1rem; 
     padding: 0.5rem 1rem; 
     cursor: pointer; 
-    transition: color 0.3s ease; 
+    transition: color 0.3s ease, transform 0.2s ease; 
 } 
 
 nav .nav-btn:hover, nav .nav-btn.active { 
@@ -159,7 +164,7 @@ h2 {
 }
 
 .product-card:hover {
-    transform: translateY(5px) scale(1.05);
+    transform: translateY(-5px) scale(1.02); /* Improved 'delaa' effect */
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
 }
 .product-card img { 
@@ -202,7 +207,7 @@ h2 {
     border-radius: 5px; 
     font-weight: 600; 
     cursor: pointer; 
-    transition: background-color 0.3s ease; 
+    transition: background-color 0.3s ease, transform 0.1s ease; /* Added transform transition */
 } 
 
 .btn-add-cart { 
@@ -276,7 +281,7 @@ h2 {
 
 .options-container label, .options-container select, .options-container input { 
     font-size: 1rem; 
-    color: var(--text-color); 
+    color: var(--text-color);
 } 
 
 .options-container select, .options-container input { 
@@ -300,7 +305,7 @@ h2 {
     font-weight: bold; 
     cursor: pointer; 
     font-size: 1rem; 
-    transition: background-color 0.3s ease; 
+    transition: background-color 0.3s ease, transform 0.1s ease; 
 } 
 
 #add-to-cart-btn { 
@@ -328,7 +333,7 @@ h2 {
     padding: 0.75rem 1.5rem; 
     border-radius: 5px; 
     cursor: pointer; 
-    transition: background-color 0.3s ease; 
+    transition: background-color 0.3s ease, transform 0.1s ease; 
 } 
 .btn-back:hover { 
     background-color: #666; 
@@ -349,7 +354,7 @@ h2 {
     border-radius: 5px; 
     cursor: pointer; 
     font-weight: 600; 
-    transition: background-color 0.3s ease; 
+    transition: background-color 0.3s ease, transform 0.1s ease; 
 } 
 
 .filter-btn:hover, .filter-btn.active { 
@@ -428,7 +433,7 @@ h2 {
     cursor: pointer; 
     font-size: 1rem; 
     font-weight: bold; 
-    transition: background-color 0.3s ease; 
+    transition: background-color 0.3s ease, transform 0.1s ease; 
 } 
 
 .btn-primary:hover { 
@@ -670,7 +675,7 @@ footer {
     cursor: pointer;
     font-weight: bold;
     margin-left: 10px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
 #search-go-btn:hover {
