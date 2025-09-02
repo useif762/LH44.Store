@@ -22,15 +22,22 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 20, name: "Red Bull Car Model", price: 2200, images: ["red-bull.car.jpg", "red-bull.car.b.jpg"], description: "A miniature model of the Red Bull car.", hasSize: false, type: "decor" },
     ];
     const homeProductsIds = [1, 3, 5, 11, 9];
+    // منتجات قسم العروض
+    const offersProducts = [
+        productsData.find(p => p.id === 1), // F1 Hoodie
+        productsData.find(p => p.id === 10), // Red Ferrari T-Shirt
+        productsData.find(p => p.id === 12), // Ferrari Charles Leclerc Cap (16)
+        productsData.find(p => p.id === 17)  // Red Bull T-Shirt (Max Verstappen)
+    ];
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     let currentProduct = null;
     let currentImageIndex = 0;
-    const offersProductsIds = [1, 3, 20];
-    
 
     // DOM Elements
     const homeProductsContainer = document.getElementById('home-products');
     const productsListContainer = document.getElementById('products-list');
+    const decorProductsContainer = document.getElementById('decor-products');
+    const offersProductsContainer = document.getElementById('offers-products');
     const navButtons = document.querySelectorAll('.nav-btn');
     const filterButtons = document.querySelectorAll('.filter-btn');
     const backToProductsBtn = document.getElementById('back-to-products-btn');
@@ -185,7 +192,15 @@ document.addEventListener('DOMContentLoaded', () => {
         filterButtons.forEach(btn => btn.classList.remove('active'));
         document.querySelector(`.filter-btn[data-filter="${type}"]`).classList.add('active');
         
-        const filteredProducts = type === 'all' ? productsData : productsData.filter(p => p.type === type);
+        let filteredProducts;
+        if (type === 'all') {
+            filteredProducts = productsData;
+        } else if (type === 'offers') {
+            filteredProducts = offersProducts;
+        } else {
+            filteredProducts = productsData.filter(p => p.type === type);
+        }
+        
         renderProducts(productsListContainer, filteredProducts);
     };
 
@@ -292,36 +307,74 @@ document.addEventListener('DOMContentLoaded', () => {
         chatBody.scrollTop = chatBody.scrollHeight;
     };
 
-    const getBotResponse = (message) => {
-        const lowerCaseMessage = message.toLowerCase().trim();
+    const chatBot = {
+        responses: {
+            // English Responses
+            en: {
+                greeting: 'Hello! How can I help you today? You can ask about products, shipping, payment methods, or anything else about our store.',
+                products: 'Certainly! You can browse all our products on the products page. We have T-Shirts, hoodies, accessories, and decor items.',
+                delivery: 'Our delivery service takes 3 to 5 business days, and we ship all over Egypt.',
+                payment: 'We offer two convenient payment options: Cash on Delivery or by Visa card.',
+                sizes: 'Available sizes for most T-shirts and hoodies are S, L, and XL. Please check the product page for specific sizes.',
+                specific_product: (productName) => `We have "${productName}". The price is ${productsData.find(p => p.name.toLowerCase().includes(productName.toLowerCase()))?.price.toLocaleString()} EGP.`,
+                not_found: 'I am sorry, I did not find a product with that name. Please check the spelling or try a different product.',
+                fallback: 'I am sorry, I did not understand your request. Please try rephrasing your question or use the navigation buttons at the top.'
+            },
+            // Arabic Responses
+            ar: {
+                greeting: 'مرحباً بك في متجر LH44! كيف يمكنني مساعدتك اليوم؟ يمكنك أن تسألني عن المنتجات، التوصيل، الدفع، أو أي شيء يخص الموقع.',
+                products: 'بالتأكيد! يمكنك تصفح جميع منتجاتنا في صفحة المنتجات. لدينا قمصان، هوديز، إكسسوارات، ومنتجات ديكور.',
+                delivery: 'توصيل الطلبات يستغرق من 3 إلى 5 أيام عمل، وخدمة التوصيل متاحة لجميع أنحاء مصر.',
+                payment: 'نحن نقبل الدفع نقداً عند الاستلام أو عن طريق بطاقة الفيزا.',
+                sizes: 'المقاسات المتاحة لمعظم التيشيرتات والهوديز هي S, L, و XL. يمكنك التحقق من صفحة كل منتج لمعرفة المقاسات المتاحة بالتحديد.',
+                specific_product: (productName) => `نعم، لدينا "${productName}". سعر المنتج هو ${productsData.find(p => p.name.toLowerCase().includes(productName.toLowerCase()))?.price.toLocaleString()} جنيه مصري.`,
+                not_found: 'عذراً، لم أجد منتجاً بهذا الاسم. يرجى التأكد من كتابة الاسم بشكل صحيح.',
+                fallback: 'عذراً، لم أفهم سؤالك. يرجى محاولة صياغته بطريقة أخرى. أو يمكنك استخدام أزرار التنقل في الأعلى.',
+            }
+        },
+    
+        getResponse: function(message) {
+            const lowerCaseMessage = message.toLowerCase().trim();
+            const lang = lowerCaseMessage.charCodeAt(0) > 127 ? 'ar' : 'en'; // Simple detection for Arabic vs English
+            const responses = this.responses[lang];
 
-        if (lowerCaseMessage.includes('hello') || lowerCaseMessage.includes('hi')) {
-            return "Hello! How can I help you today? You can ask about products, shipping, or anything else.";
-        } else if (lowerCaseMessage.includes('products') || lowerCaseMessage.includes('t-shirts') || lowerCaseMessage.includes('hoodies') || lowerCaseMessage.includes('accessories')) {
-            showPage('products');
-            return "Certainly! You can browse all our products on the products page.";
-        } else if (lowerCaseMessage.includes('cart') || lowerCaseMessage.includes('shopping')) {
-            showPage('cart');
-            return "You've been directed to your shopping cart. I hope you find what you like.";
-        } else if (lowerCaseMessage.includes('payment') || lowerCaseMessage.includes('order confirmation') || lowerCaseMessage.includes('payment methods')) {
-            return "We offer convenient payment options: you can pay with cash on delivery or by Visa.";
-        } else if (lowerCaseMessage.includes('shipping') || lowerCaseMessage.includes('delivery') || lowerCaseMessage.includes('delivery time')) {
-            return "Our delivery service takes 3 to 5 business days, and we ship all over Egypt.";
-        } else if (lowerCaseMessage.includes('location') || lowerCaseMessage.includes('where are you')) {
-            return "Our headquarter is in Cairo, and we provide fast delivery service to all parts of Egypt.";
-        } else if (lowerCaseMessage.includes('offers') || lowerCaseMessage.includes('discounts') || lowerCaseMessage.includes('promotions')) {
-            return "Absolutely! We regularly launch special offers and discounts. Follow us on our Instagram and Facebook pages to stay informed about the latest deals.";
-        } else if (lowerCaseMessage.includes('contact') || lowerCaseMessage.includes('reach out')) {
-            return "You can find our contact details in the 'Contact' section of the website.";
-        } else if (lowerCaseMessage.includes('about you') || lowerCaseMessage.includes('who are you')) {
-            showPage('about');
-            return "I am your personal assistant at the F1 Store. You can learn more about us on the 'About Us' page.";
-        } else if (lowerCaseMessage.includes('reward') || lowerCaseMessage.includes('gift')) {
-            return "We appreciate our loyal customers! You can join our mailing list to receive special rewards and exclusive gifts.";
-        } else if (lowerCaseMessage.includes('sizes')) {
-            return "Sizes S, L, and XL are available for most t-shirts and hoodies. If you're looking for a specific size, please check the product page.";
-        } else {
-            return "I apologize, I didn't understand your request. You can try words like: 'products', 'cart', 'delivery' for me to assist you. Or you can browse the sections from the top bar.";
+            // Product search logic for both languages
+            const foundProduct = productsData.find(product =>
+                lowerCaseMessage.includes(product.name.toLowerCase()) ||
+                (product.name.toLowerCase().includes('leclerc') && lowerCaseMessage.includes('leclerc')) ||
+                (product.name.toLowerCase().includes('hamilton') && lowerCaseMessage.includes('hamilton')) ||
+                (product.name.toLowerCase().includes('norris') && lowerCaseMessage.includes('norris')) ||
+                (product.name.toLowerCase().includes('verstappen') && lowerCaseMessage.includes('verstappen'))
+            );
+            
+            if (foundProduct) {
+                showPage('product-details');
+                showProductDetails(foundProduct.id);
+                return responses.specific_product(foundProduct.name);
+            }
+
+            // General keyword responses
+            if (lowerCaseMessage.includes('hello') || lowerCaseMessage.includes('hi') || lowerCaseMessage.includes('مرحبا') || lowerCaseMessage.includes('اهلا')) {
+                return responses.greeting;
+            } else if (lowerCaseMessage.includes('products') || lowerCaseMessage.includes('ti-shart') || lowerCaseMessage.includes('hoodie') || lowerCaseMessage.includes('منتجات') || lowerCaseMessage.includes('تيشيرت') || lowerCaseMessage.includes('هوديز')) {
+                showPage('products');
+                return responses.products;
+            } else if (lowerCaseMessage.includes('delivery') || lowerCaseMessage.includes('shipping') || lowerCaseMessage.includes('توصيل') || lowerCaseMessage.includes('شحن')) {
+                return responses.delivery;
+            } else if (lowerCaseMessage.includes('payment') || lowerCaseMessage.includes('pay') || lowerCaseMessage.includes('دفع')) {
+                return responses.payment;
+            } else if (lowerCaseMessage.includes('sizes') || lowerCaseMessage.includes('size') || lowerCaseMessage.includes('مقاسات') || lowerCaseMessage.includes('مقاس')) {
+                return responses.sizes;
+            } else if (lowerCaseMessage.includes('cart') || lowerCaseMessage.includes('shopping') || lowerCaseMessage.includes('عربة') || lowerCaseMessage.includes('سلة')) {
+                showPage('cart');
+                return lang === 'en' ? "You've been directed to your shopping cart." : "لقد تم توجيهك إلى عربة التسوق الخاصة بك.";
+            } else if (lowerCaseMessage.includes('thanks') || lowerCaseMessage.includes('thank you') || lowerCaseMessage.includes('شكرا') || lowerCaseMessage.includes('تمام')) {
+                return lang === 'en' ? 'You are welcome! Let me know if you need anything else.' : 'على الرحب والسعة! إذا احتجت أي مساعدة أخرى، أنا موجود.';
+            } else if (lowerCaseMessage.includes('bye') || lowerCaseMessage.includes('goodbye') || lowerCaseMessage.includes('سلام') || lowerCaseMessage.includes('مع السلامة')) {
+                return lang === 'en' ? 'Goodbye! Have a great day.' : 'مع السلامة! أتمنى لك يوماً سعيداً.';
+            }
+
+            return responses.fallback;
         }
     };
     
@@ -333,7 +386,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (section === 'cart') {
                 renderCart();
             } else if (section === 'products') {
-                filterProducts('all'); 
+                filterProducts('all');
+            } else if (section === 'offers') {
+                renderProducts(offersProductsContainer, offersProducts);
+            } else if (section === 'decor') {
+                renderProducts(decorProductsContainer, decorProducts);
             }
         });
     });
@@ -414,7 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // No additional validation needed for cash
         }
 
-        //showNotification('Order placed successfully! Thank you for your purchase.');
+        showNotification('Order placed successfully! Thank you for your purchase.');
         cart = [];
         saveCart();
         updateCartCount();
@@ -422,7 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             showPage('home');
             checkoutForm.reset();
-        }, 500);
+        }, 2000);
     });
 
     prevBtn.addEventListener('click', () => changeImage(-1));
@@ -462,7 +519,7 @@ document.addEventListener('DOMContentLoaded', () => {
             addMessage(userMessage, 'user');
             chatInput.value = '';
             setTimeout(() => {
-                const botResponse = getBotResponse(userMessage);
+                const botResponse = chatBot.getResponse(userMessage);
                 addMessage(botResponse, 'bot');
             }, 500);
         }
@@ -527,240 +584,4 @@ window.addEventListener('scroll', () => {
     } else {
         document.body.classList.remove('scrolled');
     }
-});
-
-// إضافة البحث السريع
-searchInput.addEventListener('input', debounce(() => {
-    const query = searchInput.value.toLowerCase();
-    const filteredProducts = productsData.filter(product => 
-        product.name.toLowerCase().includes(query) ||
-        product.description.toLowerCase().includes(query)
-    );
-    
-    renderSearchResults(filteredProducts);
-}, 300));
-
-// دالة التصفية المتقدمة
-function filterProductsAdvanced(filters) {
-    return productsData.filter(product => {
-        let matches = true;
-        
-        if (filters.type && product.type !== filters.type) matches = false;
-        if (filters.minPrice && product.price < filters.minPrice) matches = false;
-        if (filters.maxPrice && product.price > filters.maxPrice) matches = false;
-        
-        return matches;
-    });
-}
-
-// إضافة زر العرض السريع
-function addQuickViewButtons() {
-    const productCards = document.querySelectorAll('.product-card');
-    productCards.forEach(card => {
-        const quickView = document.createElement('button');
-        quickView.className = 'quick-view-btn';
-        quickView.textContent = 'عرض سريع';
-        quickView.onclick = () => showQuickView(card.dataset.productId);
-        card.appendChild(quickView);
-    });
-}
-
-// عرض المنتج السريع
-function showQuickView(productId) {
-    const product = productsData.find(p => p.id === parseInt(productId));
-    if (!product) return;
-    
-    const quickView = document.createElement('div');
-    quickView.className = 'quick-view';
-    quickView.innerHTML = `
-        <div class="quick-view-content">
-            <img src="${product.images[0]}" alt="${product.name}">
-            <h3>${product.name}</h3>
-            <p>${product.description}</p>
-            <div class="price">${product.price} EGP</div>
-            <div class="actions">
-                <button onclick="addToCart(${productId})" class="btn-primary">
-                    إضافة إلى السلة
-                </button>
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(quickView);
-    quickView.style.opacity = '1';
-}
-
-// إضافة زر العرض السريع عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', addQuickViewButtons);
-
-// تحسينات التحليلات
-function trackUserActivity() {
-    const events = {
-        productViews: [],
-        searchQueries: [],
-        cartActions: []
-    };
-    
-    document.querySelectorAll('.product-card').forEach(card => {
-        card.addEventListener('click', () => {
-            events.productViews.push({
-                productId: card.dataset.productId,
-                timestamp: new Date()
-            });
-        });
-    });
-    
-    searchInput.addEventListener('input', () => {
-        events.searchQueries.push({
-            query: searchInput.value,
-            timestamp: new Date()
-        });
-    });
-    
-    document.querySelectorAll('.cart-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            events.cartActions.push({
-                action: 'add',
-                timestamp: new Date()
-            });
-        });
-    });
-    
-    return events;
-}
-
-// إضافة التحليلات عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', () => {
-    const analytics = trackUserActivity();
-});
-
-// تحسينات ChatBot
-const chatBot = {
-    responses: {
-        greeting: 'مرحباً بك في متجر F1! كيف يمكنني مساعدتك اليوم؟',
-        products: 'بالطبع! يمكنك تصفية المنتجات حسب النوع والسعر في القائمة الجانبية.',
-        delivery: 'خدمة التوصيل تستغرق 3-5 أيام عمل في جميع أنحاء مصر.',
-        payment: 'نقبل الدفع عند الاستلام أو بطاقة Visa.',
-        sizes: 'المقاسات المتاحة: S, L, XL للمعاطف والقمصان.',
-        help: 'يمكنني مساعدتك في: \n- البحث عن منتجات\n- معلومات التوصيل\n- أسعار المنتجات\n- سلة التسوق\n- معلومات الدفع\n- المقاسات المتاحة\n- متابعة الطلبات'
-    },
-    
-    getResponse: function(message) {
-        const lowerCaseMessage = message.toLowerCase();
-        
-        // استجابات أساسية
-        if (lowerCaseMessage.includes('مرحبا') || lowerCaseMessage.includes('هلا')) {
-            return this.responses.greeting;
-        } else if (lowerCaseMessage.includes('منتجات')) {
-            return this.responses.products;
-        } else if (lowerCaseMessage.includes('توصيل')) {
-            return this.responses.delivery;
-        } else if (lowerCaseMessage.includes('دفع')) {
-            return this.responses.payment;
-        } else if (lowerCaseMessage.includes('مقاس')) {
-            return this.responses.sizes;
-        } else if (lowerCaseMessage.includes('مساعدة') || lowerCaseMessage.includes('ماهي خدماتك')) {
-            return this.responses.help;
-        }
-        
-        // استجابات تفاعلية
-        if (lowerCaseMessage.includes('شكرا') || lowerCaseMessage.includes('تحية')) {
-            return 'على الرحب والسعة! كيف يمكنني مساعدتك اليوم؟';
-        } else if (lowerCaseMessage.includes('مع السلامة') || lowerCaseMessage.includes('ما اعرف')) {
-            return 'مع السلامة! إذا احتجت أي مساعدة فيما بعد، أنا موجود هنا لمساعدتك.';
-        } else if (lowerCaseMessage.includes('متوفر') || lowerCaseMessage.includes('فيه')) {
-            return 'نعم، جميع المنتجات المعروضة متوفرة للشراء.';
-        } else if (lowerCaseMessage.includes('سعر') && !lowerCaseMessage.includes('دفع')) {
-            return 'يمكنك معرفة السعر الدقيق لكل منتج من خلال صفحته التفصيلية.';
-        }
-        
-        // استجابة افتراضية
-        return 'عذراً، لم أفهم سؤالك بشكل كامل. هل يمكنك إعادة صياغته؟ يمكنني مساعدتك في: البحث عن منتجات، معلومات التوصيل، أسعار المنتجات، سلة التسوق، معلومات الدفع، المقاسات المتاحة، ومتابعة الطلبات.';
-    }
-};
-
-// تحسينات واجهة الدردشة
-const chatWindow = document.getElementById('chat-window');
-const chatInput = document.getElementById('chat-input');
-const sendBtn = document.getElementById('send-btn');
-const chatBody = document.getElementById('chat-body');
-
-// تحسينات تفاعلية
-chatInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        sendBtn.click();
-    }
-});
-
-sendBtn.addEventListener('click', () => {
-    const userMessage = chatInput.value.trim();
-    if (userMessage) {
-        addMessage(userMessage, 'user');
-        chatInput.value = '';
-        
-        setTimeout(() => {
-            const botResponse = chatBot.getResponse(userMessage);
-            addMessage(botResponse, 'bot');
-        }, 500);
-    }
-});
-
-// تحسينات إضافية
-function addMessage(message, sender) {
-    const messageEl = document.createElement('div');
-    messageEl.classList.add('message', `${sender}-message`);
-    messageEl.textContent = message;
-    chatBody.appendChild(messageEl);
-    chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-// تحسينات CSS للدردشة
-const chatStyles = `
-    .chat-window {
-        position: fixed;
-        bottom: 90px;
-        right: 20px;
-        width: 350px;
-        height: 450px;
-        background-color: var(--secondary-color);
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-        z-index: 1000;
-        transition: transform 0.3s ease, opacity 0.3s ease;
-    }
-
-    .chat-window.hidden {
-        transform: translateY(20px) scale(0.95);
-        opacity: 0;
-        pointer-events: none;
-        display: none;
-    }
-
-    .message {
-        padding: 10px;
-        border-radius: 15px;
-        max-width: 80%;
-        margin: 5px;
-    }
-
-    .user-message {
-        background-color: var(--accent-color);
-        align-self: flex-end;
-        color: white;
-    }
-
-    .bot-message {
-        background-color: #3e3e3e;
-        align-self: flex-start;
-    }
-`;
-
-// إضافة التحسينات عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', () => {
-    const styleSheet = document.createElement('style');
-    styleSheet.textContent = chatStyles;
-    document.head.appendChild(styleSheet);
 });
