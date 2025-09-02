@@ -840,3 +840,50 @@ body.scrolled header {
     50% { transform: scale(1.3); }
     100% { transform: scale(1); }
 }
+/* تأثيرات حركية متقدمة */
+.product-card {
+  transition: all 0.3s ease-in-out;
+  transform-origin: center;
+}
+
+.product-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* تأثير Parallax عند التمرير */
+.parallax {
+  position: relative;
+  transform: translateY(0);
+  transition: transform 0.3s ease-out;
+}
+
+.parallax::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  transform: translateY(0);
+  transition: transform 0.3s ease-out;
+  z-index: -1;
+}
+
+/* تأثير Zoom للصور */
+.product-image {
+  overflow: hidden;
+  border-radius: 10px;
+  transition: transform 0.3s ease-out;
+}
+
+.product-image img {
+  transition: transform 0.3s ease-out;
+}
+
+.product-image:hover img {
+  transform: scale(1.1);
+}
+
+
