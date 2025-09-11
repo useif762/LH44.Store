@@ -471,15 +471,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // No additional validation needed for cash
         }
 
-        showNotification('Order placed successfully! Thank you for your purchase.');
-        cart = [];
-        saveCart();
-        updateCartCount();
-        
+     showNotification('Order confirmed! Thank you for shopping with us.😁');
+         cart = [];
+         updateCartCount();
         setTimeout(() => {
             showPage('home');
             checkoutForm.reset();
-        }, 2000);
+        }, 1000);
     });
 
     prevBtn.addEventListener('click', () => changeImage(-1));
@@ -585,3 +583,4 @@ window.addEventListener('scroll', () => {
         document.body.classList.remove('scrolled');
     }
 });
+
