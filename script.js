@@ -1,25 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
     const productsData = [
-        { id: 1, name: "F1 Hoodie", price: 1200, images: ["f1.hoodie.jpg", "f1.hoodie.b.jpg"], description: "A stylish hoodie with a Ferrari design for all-day comfort.", hasSize: true, sizes: ["S", "L", "XL"], type: "hoodie" },
-        { id: 2, name: "F1 T-Shirt", price: 500, images: ["f1.t-shirt.jpg", "f1.t-shirt.b.jpg"], description: "A light and trendy t-shirt, perfect for daily wear.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
-        { id: 3, name: "F1 Water Bottle", price: 350, images: ["f1.bottle.jpg"], description: "A high-quality sports water bottle with the Ferrari logo.", hasSize: false, type: "accessory" },
-        { id: 4, name: "McLaren Polo T-Shirt", price: 500, images: ["mclaren.polo.jpg", "111.jpg"], description: "A polo t-shirt with a distinctive McLaren design, combining elegance and comfort.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
-        { id: 5, name: "McLaren Cap (Lando Norris)", price: 250, images: ["mclaren.cap.l.jpg", "mclaren.cap.l.b.jpg"], description: "A modern cap with the McLaren logo, suitable for all occasions.", hasSize: false, type: "accessory" },
-        { id: 6, name: "McLaren Car Model", price: 2200, images: ["mclaren.car.jpg", "mclaren.car.b.jpg"], description: "A miniature model of the McLaren F1 car, a great addition to your collection.", hasSize: false, type: "decor" },
-        { id: 7, name: "McLaren Helmet (Lando Norris)", price: 10000, images: ["mclaren.f1.helmet.jpg", "mclaren.f1.helmet.b.jpg"], description: "An exact replica of the McLaren team helmet.", hasSize: false, type: "decor" },
-        { id: 8, name: "Black McLaren Cap", price: 250, images: ["mclaren.cap.jpg", "mclaren.cap.b.jpg"], description: "A McLaren cap in classic black.", hasSize: false, type: "accessory" },
-        { id: 9, name: "Ferrari Lewis Hamilton Cap (44)", price: 250, images: ["scuderia-ferrari.cap.1.jpg", "scuderia-ferrari.cap.1.b.jpg"], description: "A sporty Ferrari cap with a unique design.", hasSize: false, type: "accessory" },
-        { id: 10, name: "Red Ferrari T-Shirt", price: 500, images: ["scuderia-ferrari.t-shirt.jpg", "scuderia-ferrari.t-shirt.b.jpg"], description: "A classic red t-shirt with the Scuderia Ferrari logo.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
-        { id: 11, name: "White Ferrari T-Shirt", price: 500, images: ["scuderia-ferrari.t-shirt.1.jpg", "scuderia-ferrari.t-shirt.1.b.jpg"], description: "A Ferrari t-shirt with a modern and stylish design.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
-        { id: 12, name: "Ferrari Charles Leclerc Cap (16)", price: 250, images: ["5551.jpg", "3331.jpg"], description: "A stylish red cap.", hasSize: false, type: "accessory" },
-        { id: 13, name: "Black Mercedes T-Shirt", price: 500, images: ["mercedes.t-shirt.jpg", "mercedes.t-shirt.b.jpg"], description: "A Mercedes team t-shirt, comfortable and elegant.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
-        { id: 14, name: "White Mercedes T-Shirt", price: 500, images: ["mercedes.t-shirt.1.jpg", "mercedes.t-shirt.1.b.jpg"], description: "A Mercedes t-shirt with a sporty design.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
-        { id: 15, name: "Mercedes Cap", price: 250, images: ["mercedes.cap.jpg", "mercedes.cap.b.jpg"], description: "A cap with the Mercedes logo.", hasSize: false, type: "accessory" },
-        { id: 16, name: "Mercedes Car Model", price: 2200, images: ["mercedes.car.jpg", "mercedes.car.b.jpg"], description: "A miniature model of the Mercedes F1 car.", hasSize: false, type: "decor" },
-        { id: 17, name: "Red Bull T-Shirt (Max Verstappen)", price: 500, images: ["red-bull.t-shirt.jpg", "red-bull.t-shirt.b.jpg"], description: "A Red Bull team t-shirt with a bold design.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
-        { id: 18, name: "Red Bull Hoodie", price: 1200, images: ["red-bull.hoodie.jpg", "red-bull.hoodie.b.jpg"], description: "A warm and practical hoodie with the Red Bull logo.", hasSize: true, sizes: ["S", "L", "XL"], type: "hoodie" },
-        { id: 19, name: "F1 Cap", price: 250, images: ["f1.cap.jpg", "f1.cap.b.jpg"], description: "The official Red Bull cap.", hasSize: false, type: "accessory" },
-        { id: 20, name: "Red Bull Car Model", price: 2200, images: ["red-bull.car.jpg", "red-bull.car.b.jpg"], description: "A miniature model of the Red Bull car.", hasSize: false, type: "decor" },
+        { id: 1, name: "F1 Hoodie", price: 1200, images: ["image/f1.hoodie.jpg", "image/f1.hoodie.b.jpg"], description: "A stylish hoodie with a Ferrari design for all-day comfort.", hasSize: true, sizes: ["S", "L", "XL"], type: "hoodie" },
+        { id: 2, name: "F1 T-Shirt", price: 500, images: ["image/f1.t-shirt.jpg", "image/f1.t-shirt.b.jpg"], description: "A light and trendy t-shirt, perfect for daily wear.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+        { id: 3, name: "F1 Water Bottle", price: 350, images: ["image/f1.bottle.jpg"], description: "A high-quality sports water bottle with the Ferrari logo.", hasSize: false, type: "accessory" },
+        { id: 4, name: "McLaren Polo T-Shirt", price: 500, images: ["image/mclaren.polo.jpg", "image/111.jpg"], description: "A polo t-shirt with a distinctive McLaren design, combining elegance and comfort.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+        { id: 5, name: "McLaren Cap (Lando Norris)", price: 250, images: ["image/mclaren.cap.l.jpg", "image/mclaren.cap.l.b.jpg"], description: "A modern cap with the McLaren logo, suitable for all occasions.", hasSize: false, type: "accessory" },
+        { id: 6, name: "McLaren Car Model", price: 2200, images: ["image/mclaren.car.jpg", "image/mclaren.car.b.jpg"], description: "A miniature model of the McLaren F1 car, a great addition to your collection.", hasSize: false, type: "decor" },
+        { id: 7, name: "McLaren Helmet (Lando Norris)", price: 10000, images: ["image/mclaren.f1.helmet.jpg", "image/mclaren.f1.helmet.b.jpg"], description: "An exact replica of the McLaren team helmet.", hasSize: false, type: "decor" },
+        { id: 8, name: "Black McLaren Cap", price: 250, images: ["image/mclaren.cap.jpg", "image/mclaren.cap.b.jpg"], description: "A McLaren cap in classic black.", hasSize: false, type: "accessory" },
+        { id: 9, name: "Ferrari Lewis Hamilton Cap (44)", price: 250, images: ["image/scuderia-ferrari.cap.1.jpg", "image/scuderia-ferrari.cap.1.b.jpg"], description: "A sporty Ferrari cap with a unique design.", hasSize: false, type: "accessory" },
+        { id: 10, name: "Red Ferrari T-Shirt", price: 500, images: ["image/scuderia-ferrari.t-shirt.jpg", "image/scuderia-ferrari.t-shirt.b.jpg"], description: "A classic red t-shirt with the Scuderia Ferrari logo.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+        { id: 11, name: "White Ferrari T-Shirt", price: 500, images: ["image/scuderia-ferrari.t-shirt.1.jpg", "image/scuderia-ferrari.t-shirt.1.b.jpg"], description: "A Ferrari t-shirt with a modern and stylish design.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+        { id: 12, name: "Ferrari Charles Leclerc Cap (16)", price: 250, images: ["image/5551.jpg", "image/3331.jpg"], description: "A stylish red cap.", hasSize: false, type: "accessory" },
+        { id: 13, name: "Black Mercedes T-Shirt", price: 500, images: ["image/mercedes.t-shirt.jpg", "image/mercedes.t-shirt.b.jpg"], description: "A Mercedes team t-shirt, comfortable and elegant.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+        { id: 14, name: "White Mercedes T-Shirt", price: 500, images: ["image/mercedes.t-shirt.1.jpg", "image/mercedes.t-shirt.1.b.jpg"], description: "A Mercedes t-shirt with a sporty design.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+        { id: 15, name: "Mercedes Cap", price: 250, images: ["image/mercedes.cap.jpg", "image/mercedes.cap.b.jpg"], description: "A cap with the Mercedes logo.", hasSize: false, type: "accessory" },
+        { id: 16, name: "Mercedes Car Model", price: 2200, images: ["image/mercedes.car.jpg", "image/mercedes.car.b.jpg"], description: "A miniature model of the Mercedes F1 car.", hasSize: false, type: "decor" },
+        { id: 17, name: "Red Bull T-Shirt (Max Verstappen)", price: 500, images: ["image/red-bull.t-shirt.jpg", "image/red-bull.t-shirt.b.jpg"], description: "A Red Bull team t-shirt with a bold design.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+        { id: 18, name: "Red Bull Hoodie", price: 1200, images: ["image/red-bull.hoodie.jpg", "image/red-bull.hoodie.b.jpg"], description: "A warm and practical hoodie with the Red Bull logo.", hasSize: true, sizes: ["S", "L", "XL"], type: "hoodie" },
+        { id: 19, name: "F1 Cap", price: 250, images: ["image/f1.cap.jpg", "image/f1.cap.b.jpg"], description: "The official Red Bull cap.", hasSize: false, type: "accessory" },
+        { id: 20, name: "Red Bull Car Model", price: 2200, images: ["image/red-bull.car.jpg", "image/red-bull.car.b.jpg"], description: "A miniature model of the Red Bull car.", hasSize: false, type: "decor" },
     ];
     const homeProductsIds = [1, 3, 5, 11, 9];
     // منتجات قسم العروض
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         productsData.find(p => p.id === 1), // F1 Hoodie
         productsData.find(p => p.id === 10), // Red Ferrari T-Shirt
         productsData.find(p => p.id === 12), // Ferrari Charles Leclerc Cap (16)
-        productsData.find(p => p.id === 17)  // Red Bull T-Shirt (Max Verstappen)
+        productsData.find(p => p.id === 17)  // Red Bull T-Shirt (Max Verstappen)
     ];
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     let currentProduct = null;
@@ -88,6 +88,11 @@ document.addEventListener('DOMContentLoaded', () => {
         navButtons.forEach(btn => btn.classList.remove('active'));
         document.querySelector(`.nav-btn[data-section="${id}"]`)?.classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // 🚀 التعديل الأول (حفظ الصفحة عند التحديث)
+        if (window.location.hash !== `#${id}`) {
+            window.location.hash = id;
+        }
     };
 
     const showNotification = (message) => {
@@ -529,28 +534,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Handle scroll to hide/show header
+    // 🌟🌟🌟🌟🌟 التعديل الثاني والدمج (إخفاء/إظهار الناف بار) 🌟🌟🌟🌟🌟
+    // تم دمج منطق إضافة فئة 'scrolled' مع منطق إخفاء/إظهار 'header-hidden' في مُعالِج واحد
     window.addEventListener('scroll', () => {
         const currentScrollY = window.scrollY;
 
-        // Hide header on scroll down after a certain point
+        // إخفاء الناف بار عند النزول للأسفل وبعد التجاوز بـ 100 بكسل
         if (currentScrollY > lastScrollY && currentScrollY > 100) {
             header.classList.add('header-hidden');
         } 
-        // Show header on scroll up
+        // إظهار الناف بار عند الصعود للأعلى
         else if (currentScrollY < lastScrollY) {
             header.classList.remove('header-hidden');
         }
 
-        // Always show header at the very top of the page
+        // دائماً إظهار الناف بار في أعلى الصفحة
         if (currentScrollY === 0) {
             header.classList.remove('header-hidden');
+        }
+        
+        // الكود المسؤول عن إضافة فئة "scrolled" (تم نقله من الجزء المكرر)
+        if (currentScrollY > 50) {
+            document.body.classList.add('scrolled');
+        } else {
+            document.body.classList.remove('scrolled');
         }
 
         lastScrollY = currentScrollY;
     });
 
-    // Initial page load
+    // 💡 نقطة البداية (Initial page load) - ستعمل الآن بشكل صحيح
     const initialPage = window.location.hash.substring(1) || 'home';
     showPage(initialPage);
     renderProducts(homeProductsContainer, productsData.filter(p => homeProductsIds.includes(p.id)));
@@ -574,13 +587,34 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add('fade-in');
 });
 
-// New: Scroll effect on header
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('header');
-    if (window.scrollY > 50) {
-        document.body.classList.add('scrolled');
-    } else {
-        document.body.classList.remove('scrolled');
-    }
-});
+// ❌ تم حذف معالج حدث 'scroll' المكرر من هنا
+// لأننا دمجنا وظيفته في المعالج الأول داخل 'DOMContentLoaded'
 
+// Function to close the navbar menu
+function closeNavbar() {
+    // تأكد من أن bootstrap محملة
+    if (typeof bootstrap !== 'undefined' && document.getElementById('navbarSupportedContent')) {
+        const navbarCollapse = document.getElementById('navbarSupportedContent');
+        const bsCollapse = new bootstrap.Collapse(navbarCollapse, {
+            toggle: false
+        });
+        bsCollapse.hide();
+    }
+}
+
+// Get all navigation buttons inside the hamburger menu
+// ❗ ملاحظة: تم تعريف navButtons بالفعل في الأعلى، لكن هذا الكود سيعمل إذا كان موجوداً في الخارج
+const navButtons = document.querySelectorAll('.center-nav .nav-btn');
+
+// Loop through each button and add a click event listener
+navButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Check if the navbar is currently open
+        const isNavbarOpen = document.getElementById('navbarSupportedContent')?.classList.contains('show');
+        
+        // If it's open, close it
+        if (isNavbarOpen) {
+            closeNavbar();
+        }
+    });
+});
